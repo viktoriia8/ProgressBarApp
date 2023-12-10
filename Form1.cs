@@ -1,5 +1,4 @@
-﻿//using ImTools;
-using DryIoc.Messages;
+﻿using DryIoc.Messages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +19,7 @@ namespace ProgressBarApp
             InitializeComponent();
 
         }
-        static int length = 100;
+        static int length = 1000;
         int[,] matrix = new int[length, length];
         int[,] matrix1 = new int[length, length];
         int[,] matrix2 = new int[length, length];
@@ -29,11 +28,6 @@ namespace ProgressBarApp
         {
             backgroundWorker1.RunWorkerAsync();
   
-        }
-
-        private void btnStop_Click(object sender, EventArgs e)
-        {
-            backgroundWorker1.CancelAsync();
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -68,17 +62,17 @@ namespace ProgressBarApp
                 {
                     matrix2[i, j] = 0;
                     for (int k = 0; k < matrix2.GetLength(1); k++)
-                    { // OR k<b.GetLength(0)
+                    { 
                         if (backgroundWorker1.CancellationPending)
                         {
                             e.Cancel = true;
                             return;
                         }
                         matrix2[i, j] = matrix2[i, j] + matrix[i, k] * matrix1[k, j];
-                        backgroundWorker1.ReportProgress((i * matrix2.GetLength(1) + j) * 100 / (matrix2.GetLength(0) * matrix2.GetLength(1)));
+                        }
+                      
                     }
-                   //backgroundWorker1.ReportProgress((j * length ) * 100 / (length * length));
-                }
+                backgroundWorker1.ReportProgress((i * length) * 100 / (length * length));
             }
         }
 
